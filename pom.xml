@@ -16,6 +16,11 @@
         <quarkus.platform.version>3.13.3</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.2.5</surefire-plugin.version>
+
+        <kogito.bom.group-id>org.kie.kogito</kogito.bom.group-id>
+        <kogito.bom.artifact-id>kogito-bom</kogito.bom.artifact-id>
+        <kogito.bom.version>10.0.999-SNAPSHOT</kogito.bom.version>
+        <version.org.kie.kogito>10.0.999-SNAPSHOT</version.org.kie.kogito>
     </properties>
 
     <dependencyManagement>
@@ -27,10 +32,28 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>${kogito.bom.group-id}</groupId>
+                <artifactId>${kogito.bom.artifact-id}</artifactId>
+                <version>${kogito.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <!-- Kogito -->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-addons-quarkus-process-management</artifactId>
+            <version>10.0.999-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-with-drools-quarkus</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
@@ -106,8 +129,36 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.kie.kogito</groupId>
+                <artifactId>kogito-maven-plugin</artifactId>
+                <version>10.0.999-SNAPSHOT</version> <!-- Use the appropriate version -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generateModel</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache.snapshots</id>
+            <url>https://repository.apache.org/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>apache.snapshots</id>
+            <name>Apache Snapshot Repository</name>
+            <url>https://repository.apache.org/snapshots</url>
+        </repository>
+    </repositories>
 
     <profiles>
         <profile>
