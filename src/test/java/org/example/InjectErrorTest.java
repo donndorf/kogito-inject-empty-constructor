@@ -4,7 +4,6 @@ import io.quarkus.arc.Arc;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 import org.kie.kogito.Model;
-import org.kie.kogito.process.ProcessInstance;
 import org.kie.kogito.process.impl.AbstractProcess;
 
 import java.util.HashMap;
@@ -21,5 +20,4 @@ class InjectErrorTest {
         model.fromMap(new HashMap<>());
         process.createInstance(model).start();
     }
-
 }
